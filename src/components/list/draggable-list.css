@@ -1,0 +1,15 @@
+ul, li {
+    list-style-type: none;
+}
+
+.draggable-list__item {
+    padding: 10px 0;
+}
+
+.draggable-list__item > * {
+    pointer-events: none;
+}
+
+.draggable-list__item.dragstart {
+    opacity: 0.5;
+}
