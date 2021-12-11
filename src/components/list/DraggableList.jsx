@@ -18,6 +18,11 @@ const DraggableList = ({list, renderItemContent}) => {
                     }
                 </DraggableListItem>
             ))}
+            {/* add last item so you can drag item to last position */}
+            <DraggableListItem
+                key={list.length}
+                draggable={false}
+            />
         </ul>
     )
 }

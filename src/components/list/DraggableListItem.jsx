@@ -24,7 +24,7 @@ const DraggableListItem = props => {
 
         // add some style
         ghostNode.style.opacity = '0.8';
-        ghostNode.style.pointerEvent = 'none'
+        ghostNode.style.pointerEvents = 'none'
 
         ghostNode.id = 'ghostNode';
 
@@ -42,13 +42,44 @@ const DraggableListItem = props => {
         ghostNode.style.left = (e.pageX - e.target.offsetWidth/2) + 'px';
     }
 
+    // event when drag end
+    const onDragEnd = () => {
+        // remove ghost node
+        document.querySelector('#ghostNode').remove();
+        // remove selected item style
+        itemRef.current.classList.remove('dragstart');
+    }
+
+    // event when drag over item
+    const onDragEnter = () => {
+        console.log("ON DRAG ENTER");
+        itemRef.current.classList.add('dragover');
+    }
+
+    // event when drag leave item
+    const onDragLeave = () => itemRef.current.classList.remove('dragover');
+
+    // add event for item dropping
+    const onDragOver = (e) => e.preventDefault();
+
+    // event when drop
+    const onDrop = () => {
+        itemRef.current.classList.remove('dragover');
+        //props.onDrop(props.index);
+    }
+
     return (
         <li 
             ref={itemRef}
             className="draggable-list__item"
-            draggable="true"
+            draggable={props.draggable !== undefined ? props.draggable : true}
             onDragStart={onDragStart}
             onDrag={onDrag}
+            onDragEnd={onDragEnd}
+            onDragEnter={onDragEnter}
+            onDragLeave={onDragLeave}
+            onDragOver={onDragOver}
+            onDrop={onDrop}
             >
             {props.children}
         </li>
@@ -56,7 +87,7 @@ const DraggableListItem = props => {
 }
 
 DraggableListItem.propTypes = {
-    
+    draggable: PropTypes.bool,
 }
 
 export default DraggableListItem;
